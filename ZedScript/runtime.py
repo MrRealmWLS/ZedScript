@@ -84,7 +84,7 @@ def execute(context: list):
             line = f'"{result}"'
 
 
-        if line.startswith("Print("):
+        if line.startswith("print("):
             
             utils.Print(line, pc)
             pc += 1

@@ -51,7 +51,7 @@ def Input(line, pc):
     return f'"{r}"'
 
 def Print(line, pc):
-    n, text = line.split("Print(", 1)
+    n, text = line.split("print(", 1)
     text = text.replace(")", "", -1)
     text_type = check_type(text, pc)
     if text_type == "str":
