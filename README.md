@@ -39,7 +39,7 @@ var name = input("Enter name: ");  // Get user input
 Printing output:
 
 ```zs
-Print("Hello " + name);
+print("Hello " + name);
 ```
 
 Math operations:
