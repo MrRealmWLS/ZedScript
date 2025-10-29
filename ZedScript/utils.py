@@ -30,8 +30,7 @@ def check_type(value, pc):
         elif value == "True" or value == "False":
             return "bool"
         else:
-            print(value)
-            error.UnknownTypeError("The specified data type is not recognized", line_number=pc)
+            error.UnknownTypeError(f"The {value} data type is not recognized", line_number=pc)
 
 def is_float(value):
     try:
