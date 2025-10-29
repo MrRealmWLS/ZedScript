@@ -1,23 +1,29 @@
-// Test ZedScript file
+// ZedScript variables
+var user_name = input("Enter your name: ");
 
-// Variable declaration
-var x = 10;
-var y = 5;
+// Print basic outputs
+print("Hello " + user_name + "!");
 
-// Math operation
-var sum = x + y;
-var product = x * y;
-
-// Input from user
-var name = input("Enter your name: ");
-
-// Print outputs
-print("Hello " + name + "!");
-print("x + y = " + sum);
-print("x * y = " + product);
-
-// Python block
+// Python generates values
 py:
-    z = sum + product
-    Print("Sum + Product from Python block = " + str(z))
+    base = 7
+    factor = 4
+    multiplied = base * factor
+    bonus = 10
+    total = multiplied + bonus
+    average = total / 2
 endpy
+
+// Use Python-generated values in ZedScript
+var multiplied_from_python = multiplied;
+var total_from_python = total;
+var average_from_python = average;
+
+// Print outputs in ZedScript
+print("Multiplied (from Python) = " + str(multiplied_from_python));
+print("Total (from Python) = " + str(total_from_python));
+print("Average (from Python) = " + str(average_from_python));
+
+// Further math in ZedScript using Python values
+var doubled_total = total_from_python * 2;
+print("Doubled Total = " + str(doubled_total));
