@@ -12,9 +12,9 @@ var product = x * y;
 var name = input("Enter your name: ");
 
 // Print outputs
-Print("Hello " + name + "!");
-Print("x + y = " + sum);
-Print("x * y = " + product);
+print("Hello " + name + "!");
+print("x + y = " + sum);
+print("x * y = " + product);
 
 // Python block
 py:
