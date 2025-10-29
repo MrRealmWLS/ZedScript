@@ -19,7 +19,7 @@ def execute(context: list):
         if utils.is_empty(line):
             pc += 1
             continue
-        if in_pyblock:
+        elif in_pyblock:
             if line.startswith("endpy"):
                 if in_pyblock == True:
                     if not python_code:
@@ -31,17 +31,18 @@ def execute(context: list):
                 else:
                     error.SyntaxError("Never Enter a python block",pc)
             else:
+                pc+=1
                 python_code.append(line)
             continue
-        if line.startswith("py:"):
+        elif line.startswith("py:"):
             in_pyblock = True
             python_code=[]
             continue
-        if line.endswith(";"):
+        elif line.endswith(";"):
             line = line[:-1]
         elif not line.startswith("//"):
             error.SyntaxError("';' expected at end of line", line_number=pc)
-        if line.startswith("pylink"):
+        elif line.startswith("pylink"):
             base_dir = os.path.dirname(os.path.abspath(FILENAME))
             stack_var = pylink.PyLink(line, stack_var, pc, base_dir)
             pc+=1
@@ -54,13 +55,13 @@ def execute(context: list):
             pc += 1
             continue
 
-        if line.startswith("input("):
+        elif line.startswith("input("):
             utils.Input(line, pc)
             pc += 1
             continue
 
 
-        if line.startswith("var "):
+        elif line.startswith("var "):
             line = line.replace("var ", "", 1)
             name, value = line.split("=", 1)
             name, value = name.strip(), value.strip()
@@ -78,21 +79,22 @@ def execute(context: list):
             pc += 1
             continue
 
-        if re.search(r"\b\d+\s*[\+\-\*/%]\s*\d+\b", line):
+        elif re.search(r"\b\d+\s*[\+\-\*/%]\s*\d+\b", line):
             expression = line
             result = utils.math(expression,pc)
             line = f'"{result}"'
 
 
-        if line.startswith("print("):
+        elif line.startswith("print("):
             
             utils.Print(line, pc)
             pc += 1
             continue
 
-        if "os.getcwd(" in line and useos:
+        elif "os.getcwd(" in line and useos:
             line = line.replace("os.getcwd()", os.getcwd())
-
+        else:
+            error.SyntaxError(f"Invalid syntax {line}").zed_raise(pc)
         pc += 1
 
 
