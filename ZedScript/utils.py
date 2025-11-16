@@ -1,12 +1,16 @@
 import os
 import json
+import re
+import functools
 import ZedScript.error as error
 
 useos = False
 
 def get_context(filename: str):
     with open(filename, "r") as file:
-        return file.read().splitlines()
+        context = file.read().splitlines() 
+        return [line.strip() for line in context]
+
 
 def check_type(value, pc):
     if value.isdigit():
@@ -64,17 +68,19 @@ def Print(line, pc):
 
 def is_empty(string):
     return string.strip() == ""
+@functools.lru_cache(maxsize=100)
+def get_var_pattern(var_name):
+    pattern = rf"\b{re.escape(var_name)}\b"
+    return pattern
 
 def concatenate(str1, str2):
     return get_string_context(str1) + get_string_context(str2)
 
 def math(expression,line_number):
-    if any(op in expression for op in ['+', '-', '*', '/', '%']):
-        try:
-            return str(eval(expression))
-        except Exception as e:
-            return f"Error: {e}"
-    error.InvalidCharactersError("Expression does not contain any allowed operators.",line_number)
+    try:
+        return str(eval(expression))
+    except Exception as e:
+        return f"Error: {e}"
 
 def make_str(value):
     return f"'{value}'"

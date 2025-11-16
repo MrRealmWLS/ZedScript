@@ -14,8 +14,6 @@ def execute(context: list):
     in_pyblock = False
     python_code=[]
     for line in context:
-
-        line = str(line).strip()
         if utils.is_empty(line):
             pc += 1
             continue
@@ -47,9 +45,13 @@ def execute(context: list):
             stack_var = pylink.PyLink(line, stack_var, pc, base_dir)
             pc+=1
             continue
+        words_in_line = set(re.findall(r'\b\w+\b', line))
+
         for var_name, (var_type, var_value) in stack_var.items():
-            pattern = rf"\b{re.escape(var_name)}\b"
-            line = re.sub(pattern, str(var_value), line)
+            if var_name in words_in_line:
+                pattern = utils.get_var_pattern(var_name)
+                line = re.sub(pattern, str(var_value), line)
+
         
         if line.startswith("//"):
             pc += 1
