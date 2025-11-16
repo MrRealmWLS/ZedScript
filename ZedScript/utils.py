@@ -106,3 +106,14 @@ def check_dependencies(script_path: str):
             error.UnknowDependenciesError(f"Unknown dependency: {dep}")
 
     return useos
+def is_true(condition):
+    if condition == "True":
+        return True
+    elif condition == "False":
+        return False
+    else:
+        return bool(condition)
+def If(line,pc):
+    n, text = line.split("if", 1)
+    condition = text.strip()
+    return is_true(condition)
