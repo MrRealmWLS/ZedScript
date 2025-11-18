@@ -12,7 +12,7 @@ def execute(context: list):
     in_pyblock = False
     python_code = []
     block_stack = []
-
+    last_block={}
     while pc < len(context):
         line = context[pc].strip()
 
@@ -51,8 +51,9 @@ def execute(context: list):
         if block_stack and not all(b["active"] for b in block_stack):
             if line == "{":
                 block_stack[-1]["inside_braces"] = True
-            elif line == "}":
-                block_stack.pop()
+            elif line.startswith("}") or line == "}":
+                last_block=block_stack.pop()
+                line=line.replace("}","",1)
             pc += 1
             continue
 
@@ -105,11 +106,30 @@ def execute(context: list):
             block_stack.append({"type": "if", "active": condition, "inside_braces": False})
             pc += 1
             continue
-
+        if line.startswith("else"):
+            if last_block != {} and last_block["type"] == "if":
+                if not last_block["active"]:
+                    next_line = context[pc + 1] if pc + 1 < len(context) else ""
+                    if next_line.strip() == "{":
+                        pc += 1
+                    block_stack.append({"type": "else", "active": True, "inside_braces": False})
+                    pc += 1
+                    continue
+                else:
+                    next_line = context[pc + 1] if pc + 1 < len(context) else ""
+                    if next_line.strip() == "{":
+                        pc += 1
+                    block_stack.append({"type": "else", "active": False, "inside_braces": False})
+                    pc += 1
+                    continue
+            else:
+                print(last_block)
+                error.SyntaxError("Unexpected 'else'",pc+1)
+                return
         if line == "}":
             if not block_stack:
                 error.SyntaxError("Unexpected '}'", pc + 1)
-            block_stack.pop()
+            last_block = block_stack.pop()
             pc += 1
             continue
 

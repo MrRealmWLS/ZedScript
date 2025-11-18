@@ -106,14 +106,20 @@ def check_dependencies(script_path: str):
             error.UnknowDependenciesError(f"Unknown dependency: {dep}")
 
     return useos
-def is_true(condition):
+def is_true(condition,pc):
+    
     if condition == "True":
         return True
     elif condition == "False":
         return False
+
     else:
-        return bool(condition)
+        if not re.match(r'^[0-9\s\<\>\=\!\&\|\(\)]+$', condition):
+            error.VauleError("Unsafe condition",pc)
+        
+        return eval(condition)        
 def If(line,pc):
     n, text = line.split("if", 1)
+    text=text.replace("{","",-1)
     condition = text.strip()
-    return is_true(condition)
+    return is_true(condition,pc)

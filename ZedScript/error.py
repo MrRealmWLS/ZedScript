@@ -36,3 +36,7 @@ class ImportError(Error):
     def __init__(self, about, line_number=None):
         super().__init__("ImportError", about)
         self.zed_raise(line_number)
+class VauleError(Error):
+    def __init__(self, about, line_number=None):
+        super().__init__("VauleError", about)
+        self.zed_raise(line_number)
