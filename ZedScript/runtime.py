@@ -112,14 +112,7 @@ def execute(context: list):
                     next_line = context[pc + 1] if pc + 1 < len(context) else ""
                     if next_line.strip() == "{":
                         pc += 1
-                    block_stack.append({"type": "else", "active": True, "inside_braces": False})
-                    pc += 1
-                    continue
-                else:
-                    next_line = context[pc + 1] if pc + 1 < len(context) else ""
-                    if next_line.strip() == "{":
-                        pc += 1
-                    block_stack.append({"type": "else", "active": False, "inside_braces": False})
+                    block_stack.append({"type": "else", "active": not last_block["active"], "inside_braces": False})
                     pc += 1
                     continue
             else:
