@@ -3,8 +3,11 @@ import ZedScript.runtime as runtime
 try:
     filename=sys.argv[1]
 except IndexError:
-    print("""
-Error: Program is terminated 
-please used ZedScript.exe filename.zs """)
-    sys.exit()
+    stack_var={}
+    while True:
+        try:
+            repl=input("[*] ZedScript > ")
+            stack_var=runtime.execute(repl.splitlines(),stack_var)
+        except KeyboardInterrupt:
+            sys.exit()
 runtime.run(filename)
