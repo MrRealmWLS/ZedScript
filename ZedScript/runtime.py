@@ -5,9 +5,8 @@ import ZedScript.error as error
 import ZedScript.pylink as pylink
 useos = False  
 FILENAME=""
-def execute(context: list):
+def execute(context: list,stack_var={}):
     global useos, FILENAME
-    stack_var = {}
     pc = 0
     in_pyblock = False
     python_code = []
@@ -162,9 +161,9 @@ def execute(context: list):
             line = line.replace("os.getcwd()", os.getcwd())
             pc += 1
             continue
-
+        print(line)
         error.SyntaxError(f"Invalid syntax {line}").zed_raise(pc + 1)
-
+    return stack_var
 def run(filename: str):
     """Entry point for running a ZedScript file."""
     global useos
