@@ -70,7 +70,7 @@ def is_empty(string):
     return string.strip() == ""
 @functools.lru_cache(maxsize=100)
 def get_var_pattern(var_name):
-    pattern = rf"\b{re.escape(var_name)}\b"
+    pattern = rf"(?<!\w){re.escape(var_name)}(?!\w)"
     return pattern
 
 def concatenate(str1, str2):
@@ -120,6 +120,11 @@ def is_true(condition,pc):
         return eval(condition)        
 def If(line,pc):
     n, text = line.split("if", 1)
+    text=text.replace("{","",-1)
+    condition = text.strip()
+    return is_true(condition,pc)
+def While(line,pc):
+    n, text = line.split("while", 1)
     text=text.replace("{","",-1)
     condition = text.strip()
     return is_true(condition,pc)
