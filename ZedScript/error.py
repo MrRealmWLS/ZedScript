@@ -7,7 +7,7 @@ class Error():
     def zed_raise(self, line_number=None):
         error_message = f"{self.error}: {self.about}"
         if line_number is not None:
-            error_message += f"\nError occurred on line {line_number}"
+            error_message += f"occurred on line {line_number}"
         raise Exception(error_message)
 
 
