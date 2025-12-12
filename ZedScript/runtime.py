@@ -60,7 +60,8 @@ def execute(context: list,stack_var={}):
             for var_name, (var_type, var_value) in stack_var.items():
                 if var_name in words_in_line:
                     pattern = utils.get_var_pattern(var_name)
-                    line = re.sub(pattern, str(var_value), line)
+                    line = re.sub(pattern, lambda m: str(var_value), line)
+
             
         if line.startswith("//"):
             pc += 1
@@ -87,8 +88,11 @@ def execute(context: list,stack_var={}):
                 value = utils.math(value, pc + 1)
             elif var_type == "input":
                 value = utils.Input(value, pc + 1)
-            elif var_type == "os.getcwd" and useos:
-                value = utils.make_str(os.getcwd())
+            elif var_type == "os.getcwd":
+                if useos:
+                    value = utils.make_str(os.getcwd())
+                else:
+                    error.ImportError("os module not imported. Add 'os' to dependencies.json to use os.getcwd()", pc + 1)
 
             stack_var[name] = (var_type, value)
             pc += 1
@@ -170,7 +174,7 @@ def run(filename: str):
     global FILENAME
     useos = False 
     FILENAME=filename
-    utils.check_dependencies(filename)
+    useos=utils.check_dependencies(filename)
 
     context = utils.get_context(filename)
 
