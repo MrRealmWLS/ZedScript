@@ -72,9 +72,6 @@ def get_var_pattern(var_name):
     pattern = rf'"[^"]*"|\'[^\']*\'|(?<!\w){re.escape(var_name)}(?!\w)'
     return pattern
 
-def concatenate(str1, str2):
-    return get_string_context(str1) + get_string_context(str2)
-
 def math(expression,line_number):
     try:
         if "'" in expression or '"' in expression:
