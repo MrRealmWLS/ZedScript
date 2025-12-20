@@ -60,8 +60,15 @@ def execute(context: list,stack_var={}):
             for var_name, (var_type, var_value) in stack_var.items():
                 if var_name in words_in_line:
                     pattern = utils.get_var_pattern(var_name)
-                    line = re.sub(pattern, lambda m: str(var_value), line)
-
+                    line = re.sub(
+                        pattern,
+                        lambda m: (
+                            re.sub(rf'\{{{re.escape(var_name)}\}}', str(var_value), m.group(0))
+                            if m.group(0).startswith(('"', "'"))
+                            else str(var_value)
+                        ),
+                        line
+                    )
             
         if line.startswith("//"):
             pc += 1
@@ -81,8 +88,15 @@ def execute(context: list,stack_var={}):
             for var_name, (var_type, var_value) in stack_var.items():
                 if var_name in words_in_rhs:
                     pattern = utils.get_var_pattern(var_name)
-                    value = re.sub(pattern, str(var_value), value)
-
+                    value =  re.sub(
+                        pattern,
+                        lambda m: (
+                            re.sub(rf'\{{{re.escape(var_name)}\}}', str(var_value), m.group(0))
+                            if m.group(0).startswith(('"', "'"))
+                            else str(var_value)
+                        ),
+                        value
+                    )
             var_type = utils.check_type(value, pc + 1)
             if var_type == "math":
                 value = utils.math(value, pc + 1)
@@ -97,7 +111,7 @@ def execute(context: list,stack_var={}):
             stack_var[name] = (var_type, value)
             pc += 1
             continue
-
+        
         if re.search(r"\b\d+\s*[\+\-\*/%]\s*\d+\b", line):
             result = utils.math(line, pc + 1)
             line = f'"{result}"'

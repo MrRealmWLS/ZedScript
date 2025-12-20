@@ -24,7 +24,6 @@ def check_type(value, pc):
     elif value.startswith("os.getcwd("):
         return "os.getcwd"
     else:
-
         value = str(value)
         if value.startswith('"') or value.startswith("'"):
             if value.endswith('"') or value.endswith("'"):
@@ -70,7 +69,7 @@ def is_empty(string):
     return string.strip() == ""
 @functools.lru_cache(maxsize=100)
 def get_var_pattern(var_name):
-    pattern = rf"(?<!\w){re.escape(var_name)}(?!\w)"
+    pattern = rf'"[^"]*"|\'[^\']*\'|(?<!\w){re.escape(var_name)}(?!\w)'
     return pattern
 
 def concatenate(str1, str2):
@@ -78,6 +77,8 @@ def concatenate(str1, str2):
 
 def math(expression,line_number):
     try:
+        if "'" in expression or '"' in expression:
+            return str(f'"{eval(expression)}"')
         return str(eval(expression))
     except Exception as e:
         return f"Error: {e}"
