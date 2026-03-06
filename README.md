@@ -1,4 +1,4 @@
-<img src="https://i.ibb.co/7NTt3Dpg/logo.png" alt="logo" width="200"/>
+<img src="https://github.com/MrRealmWLS/ZedScript/blob/main/zedscript_logo.png?raw=true" alt="logo" width="200"/>
 
 # ZedScript
 
