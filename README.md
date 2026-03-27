@@ -7,7 +7,7 @@ ZedScript is a lightweight scripting language with a direct interpreter no parsi
 ## Installation
 
 ```bash
-git clone https://github.com/MrRealmWLS/ZedScript.git
+git clone https://github.com/RealmWLS/ZedScript.git
 cd ZedScript
 ```
 
