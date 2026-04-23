@@ -1,65 +1,117 @@
-<img src="https://github.com/MrRealmWLS/ZedScript/blob/main/zedscript_logo.png?raw=true" alt="logo" width="200"/>
+<p align="center">
+  <img src="https://github.com/RealmWLS/ZedScript/blob/main/zedscript_logo.png?raw=true" alt="ZedScript Logo" width="200"/>
+</p>
 
-# ZedScript
+<h1 align="center">ZedScript</h1>
 
-ZedScript is a lightweight scripting language with a direct interpreter no parsing phase, everything executes line by line. It supports variables, math operations, input/output, comments, and Python embedding via py: blocks, making it fast, simple, and seamlessly integrated with Python for flexible scripting.
+<p align="center">
+A scripting language with a direct interpreter built in Python.
+</p>
+
+---
+
+## About
+
+ZedScript is a programming language implemented in Python.  
+It uses a direct interpreter where each line is executed at runtime without a separate compilation step.
+
+It supports variables, math expressions, input/output, control flow, and Python embedding.
+
+---
 
 ## Installation
 
 ```bash
 git clone https://github.com/RealmWLS/ZedScript.git
 cd ZedScript
-```
+````
 
-Requires Python 3.8+.
+Requirements:
+
+* Python 3.8 or higher
+
+---
 
 ## Usage
 
-run the command line:
+Run a ZedScript file:
 
 ```bash
 python main.py <filename>
 ```
 
+Example:
+
+```bash
+python main.py test.zs
+```
+
+---
+
 ## Syntax
 
-Comments:
+### Comments
 
 ```zs
 // This is a comment
 ```
 
-Variable declaration:
+### Variables
 
 ```zs
-var x = 10;                  // Declare variable
-var name = input("Enter name: ");  // Get user input
+var x = 10;
+var name = input("Enter your name: ");
 ```
 
-Printing output:
+### Output
 
 ```zs
 print("Hello " + name);
 ```
 
-Math operations:
+### Math
 
 ```zs
 var result = 5 + 3 * 2;
+print(result);
 ```
 
-Python blocks:
+### Python blocks
 
 ```zs
 py:
     z = x + result
+    print(z)
 endpy
 ```
 
-## Notes
+---
 
-* Every statement must end with a semicolon `;`.
-* `Print()` displays text.
-* `input()` reads user input.
-* Use `py:` … `endpy` to execute Python code.
-**Created by RealmWLS**
+## Rules
+
+* Every statement ends with `;`
+* `print()` outputs text
+* `input()` reads user input
+* `py:` and `endpy` run Python code
+* Execution uses a direct interpreter model
+
+---
+
+## Features
+
+* Direct interpreter
+* Variables and expressions
+* Control flow (if, while)
+* Python embedding
+
+---
+
+## Author
+
+Created by RealmWLS
+
+---
+
+## Note
+
+ZedScript is a programming language project made for learning interpreter and language design concepts.
